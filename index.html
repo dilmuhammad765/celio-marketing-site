@@ -2,92 +2,73 @@
 <html lang="en">
 <head>
   <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
-  <title>Celio Marketing — Social Media for Real Estate Pros</title>
-  <meta name="description" content="Celio Marketing helps real estate agents and teams dominate online with high-converting social media lead generation."/>
-  <link rel="stylesheet" href="style.css?v=1.0">
-  <link rel="icon" href="logo.svg" type="image/svg+xml" />
-  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700&display=swap" rel="stylesheet">
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Celio Marketing - Real Estate Social Media Marketing</title>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;700&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="style.css" />
 </head>
 <body>
-  <header>
-    <div class="container nav-container">
-      <div class="logo">
-        <img src="logo.svg" alt="Celio Marketing Logo"/>
-        <span>Celio Marketing</span>
-      </div>
-      <nav>
-        <a href="#about">About</a>
-        <a href="#services">Services</a>
-        <a href="#results">Results</a>
-        <a href="#contact">Contact</a>
-      </nav>
+  <header class="hero">
+    <canvas id="particles"></canvas>
+    <div class="hero-content">
+      <h1 class="gradient-text">Elevate Your Real Estate Game with Proven Social Media Marketing</h1>
+      <p class="subhead">Custom campaigns that keep your pipeline full</p>
+      <a href="#contact" class="cta-button">Schedule Strategy Call</a>
+      <div class="scroll-indicator"></div>
     </div>
-    <section class="hero container">
-      <div class="hero-left">
-        <h1>
-          <span class="hero-main">Celio Marketing</span><br/>
-          <span class="hero-highlight">Real Estate Social Media Lead Generation</span>
-        </h1>
-        <p class="hero-desc">
-          Filling your pipeline with qualified buyer and seller leads using advanced, data-driven social media strategies. Less stress, more closings.
-        </p>
-        <div class="hero-actions">
-          <a href="#contact" class="btn primary">Book a Strategy Call</a>
-          <a href="#results" class="btn secondary">See Results</a>
-        </div>
-        <div class="hero-stats">
-          <div><span class="stat-num" data-to="40">0</span><span class="stat-label">Agents & Teams</span></div>
-          <div><span class="stat-num" data-to="750">0</span><span class="stat-label">Leads Generated</span></div>
-          <div><span class="stat-num" data-to="3">0</span><span class="stat-label">Years Experience</span></div>
-        </div>
-      </div>
-      <div class="hero-right">
-        <div class="lead-funnel-3d-interactive" id="lead-funnel-3d-interactive">
-          <svg id="funnelSVG" width="260" height="260" viewBox="0 0 260 260" fill="none" xmlns="http://www.w3.org/2000/svg">
-            <defs>
-              <radialGradient id="funnelGlow" cx="50%" cy="40%" r="70%" fx="50%" fy="40%">
-                <stop offset="0%" stop-color="#00ffe7" stop-opacity="0.9"/>
-                <stop offset="60%" stop-color="#00ffe7" stop-opacity="0.2"/>
-                <stop offset="100%" stop-color="#0c1018" stop-opacity="0"/>
-              </radialGradient>
-              <linearGradient id="funnelBody" x1="130" y1="50" x2="130" y2="200">
-                <stop stop-color="#00ffe7"/>
-                <stop offset="1" stop-color="#ff2fd1"/>
-              </linearGradient>
-              <filter id="f1"><feDropShadow dx="0" dy="5" stdDeviation="7" flood-color="#00ffe7" flood-opacity="0.19"/></filter>
-            </defs>
-            <ellipse cx="130" cy="120" rx="95" ry="65" fill="url(#funnelGlow)" />
-            <ellipse cx="130" cy="90" rx="65" ry="25" fill="url(#funnelBody)" filter="url(#f1)"/>
-            <rect x="65" y="90" width="130" height="70" rx="65" fill="url(#funnelBody)" opacity="0.88"/>
-            <rect x="110" y="150" width="40" height="55" rx="18" fill="#181c29" stroke="#00ffe7" stroke-width="3"/>
-            <ellipse cx="130" cy="90" rx="65" ry="25" fill="none" stroke="#fff" stroke-width="2" opacity="0.11"/>
-            <circle id="outputLead" cx="130" cy="218" r="10" fill="#00ffe7" stroke="#ff2fd1" stroke-width="2"/>
-            <g id="inputBalls"></g>
-          </svg>
-          <div class="funnel-instructions">Click a ball to drop a lead!</div>
-        </div>
-      </div>
-    </section>
   </header>
 
-  <main>
-    <section class="about-section container" id="about">
-      <h2><span>About</span> Us</h2>
-      <p class="about-lead"><strong>Celio Marketing</strong> is a boutique agency dedicated to elevating solo agents and small real estate teams through high-converting social media lead generation.</p>
-      <!-- (Omitted: features, quote, services, results, contact sections for brevity — add yours here) -->
-    </section>
-  </main>
-
-  <footer>
-    <div class="container footer-inner">
-      <div class="footer-logo">
-        <img src="logo.svg" alt="Celio Marketing Logo" />
-        <span>Celio Marketing</span>
-      </div>
-      <div class="footer-copy">&copy; 2025 Celio Marketing. All rights reserved.</div>
+  <section class="about container">
+    <h2>Our Mission</h2>
+    <p>We <span class="highlight">help realtors</span> stand out online with <span class="highlight">high-converting social media strategies</span> crafted for the real estate market.</p>
+    <div class="value-cards">
+      <div class="card">Exclusive Realtor Focus</div>
+      <div class="card">Data-Driven Strategies</div>
+      <div class="card">Customized Campaigns</div>
     </div>
-  </footer>
+  </section>
+
+  <section class="services container">
+    <h2>Our Services</h2>
+    <div class="service-cards">
+      <div class="service-card">
+        <h3>Targeted Social Advertising</h3>
+        <p>Hyper-local ads on Facebook & Instagram to generate quality leads.</p>
+      </div>
+      <div class="service-card">
+        <h3>Lead Generation Systems</h3>
+        <p>Conversion-focused landing pages & funnels crafted for real estate.</p>
+      </div>
+      <div class="service-card">
+        <h3>Content Strategy</h3>
+        <p>Custom social media calendars and creative that build trust.</p>
+      </div>
+    </div>
+  </section>
+
+  <section class="cta-full">
+    <div class="cta-content">
+      <h2>Ready to Fill Your Pipeline?</h2>
+      <a href="#contact" class="cta-button glow">Schedule a Call Today</a>
+    </div>
+  </section>
+
+  <section id="contact" class="contact container">
+    <h2>Contact Us</h2>
+    <form id="contact-form">
+      <div class="form-group">
+        <input type="text" placeholder="Your Name" required>
+      </div>
+      <div class="form-group">
+        <input type="email" placeholder="Your Email" required>
+      </div>
+      <div class="form-group">
+        <textarea placeholder="Your Message" required></textarea>
+      </div>
+      <button type="submit" class="cta-button">Send Message</button>
+    </form>
+  </section>
+
   <script src="script.js"></script>
 </body>
 </html>
