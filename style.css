@@ -473,3 +473,35 @@ footer {
   .hero-highlight { font-size: 1.09rem;}
   .cta-inner h2 { font-size: 1.21rem;}
 }
+
+/* === Interactive Lead Funnel Styles === */
+.lead-funnel-3d-interactive {
+  width: 260px;
+  height: 260px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  border-radius: 50%;
+  background: transparent;
+  box-shadow: 0 0 40px #00ffe7a0, 0 0 24px #ff2fd140;
+  margin: 0 auto;
+  animation: pulse-funnel 2.5s infinite alternate;
+  position: relative;
+}
+.funnel-instructions {
+  font-size: 0.92em;
+  color: var(--accent2, #6fe3ee);
+  text-align: center;
+  margin-top: 0.2em;
+  opacity: 0.78;
+  animation: flicker 2.5s infinite alternate;
+}
+@keyframes pulse-funnel {
+  0% { box-shadow: 0 0 40px #00ffe7a0, 0 0 24px #ff2fd140; }
+  100% { box-shadow: 0 0 75px #00ffe760, 0 0 48px #ff2fd165; }
+}
+@keyframes flicker {
+  from { opacity: 0.78;}
+  to   { opacity: 1;}
+}
