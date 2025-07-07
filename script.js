@@ -1,18 +1,25 @@
-// Animate metrics
+// Animating numbers in stats and metrics
 document.addEventListener("DOMContentLoaded", function() {
-  document.querySelectorAll('.metric-num').forEach(function(el) {
-    let to = parseInt(el.dataset.to, 10);
-    let n = 0, step = Math.max(1, Math.floor(to/60));
-    let interval = setInterval(() => {
-      n += step;
-      if(n >= to) { el.textContent = to; clearInterval(interval); }
-      else { el.textContent = n; }
-    }, 20);
-  });
-  // Logo hover animation
-  const logo = document.getElementById('celio-logo');
-  if(logo){
-    logo.addEventListener('mouseover', () => logo.style.transform = 'rotate(-9deg) scale(1.13)');
-    logo.addEventListener('mouseleave', () => logo.style.transform = '');
+  function animateNumber(el, to, suffix = '', duration = 1300) {
+    let start = 0;
+    let frame = 0;
+    let steps = Math.ceil(duration / 24);
+    let inc = to / steps;
+    function update() {
+      frame++;
+      let val = Math.round(inc * frame);
+      if (val >= to) {
+        el.textContent = to + suffix;
+      } else {
+        el.textContent = val + suffix;
+        requestAnimationFrame(update);
+      }
+    }
+    update();
   }
+  document.querySelectorAll('.stat-num, .metric-value[data-to]').forEach(el => {
+    let to = parseInt(el.dataset.to, 10);
+    let suffix = el.textContent.trim().endsWith('%') ? '%' : '';
+    animateNumber(el, to, suffix, 1200 + Math.random() * 500);
+  });
 });
