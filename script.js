@@ -1,7 +1,6 @@
-// Animating numbers in stats and metrics
 document.addEventListener("DOMContentLoaded", function() {
+  // Number animation for stats and metrics
   function animateNumber(el, to, suffix = '', duration = 1300) {
-    let start = 0;
     let frame = 0;
     let steps = Math.ceil(duration / 24);
     let inc = to / steps;
@@ -17,17 +16,14 @@ document.addEventListener("DOMContentLoaded", function() {
     }
     update();
   }
+
   document.querySelectorAll('.stat-num, .metric-value[data-to]').forEach(el => {
     let to = parseInt(el.dataset.to, 10);
     let suffix = el.textContent.trim().endsWith('%') ? '%' : '';
     animateNumber(el, to, suffix, 1200 + Math.random() * 500);
   });
-});
-// Interactive animated lead funnel balls
-document.addEventListener("DOMContentLoaded", function() {
-  // (Keep your stat animation code above)
 
-  // Interactive Funnel Animation
+  // Interactive animated funnel balls
   const inputBallsData = [
     {cx: 105, cy: 60, r: 8, fill: "#ff2fd1"},
     {cx: 155, cy: 60, r: 7, fill: "#00ffe7"},
@@ -38,51 +34,68 @@ document.addEventListener("DOMContentLoaded", function() {
     inputBallsData.forEach((ball, i) => {
       const circle = document.createElementNS("http://www.w3.org/2000/svg", "circle");
       Object.entries(ball).forEach(([k, v]) => circle.setAttribute(k, v));
-      circle.setAttribute("style", "cursor:pointer;");
+      circle.style.cursor = "pointer";
       circle.setAttribute("data-idx", i);
-      circle.addEventListener("click", function() {
-        dropBall(circle, i);
-      });
+      circle.addEventListener("click", () => dropBall(circle));
       inputBallsGroup.appendChild(circle);
     });
 
-    function dropBall(circle, idx) {
+    function dropBall(circle) {
       if (circle.getAttribute("data-dropping")) return;
       circle.setAttribute("data-dropping", "1");
-      // Animate down into funnel
-      const startY = parseInt(circle.getAttribute("cy"));
-      const endY = 150;
-      const cx = parseInt(circle.getAttribute("cx"));
+      const startY = parseFloat(circle.getAttribute("cy"));
+      const endY = 210; // Funnel output Y
+      const startX = parseFloat(circle.getAttribute("cx"));
+      const endX = 130; // Funnel center X
+      const startR = parseFloat(circle.getAttribute("r"));
       let frame = 0, frames = 35;
+
       function animate() {
         frame++;
-        let newY = startY + (endY - startY) * (frame / frames);
-        circle.setAttribute("cy", newY);
+        let t = frame / frames;
+        circle.setAttribute("cy", startY + (endY - startY) * easeOutCubic(t));
+        circle.setAttribute("cx", startX + (endX - startX) * t);
         if (frame < frames) {
           requestAnimationFrame(animate);
         } else {
-          // Shrink and fade
-          let fadeFrame = 0, fadeFrames = 13;
-          function fade() {
-            fadeFrame++;
-            circle.setAttribute("r", Math.max(0, circle.getAttribute("r") * (1 - fadeFrame / fadeFrames)));
-            circle.setAttribute("opacity", 1 - fadeFrame / fadeFrames);
-            if (fadeFrame < fadeFrames) {
-              requestAnimationFrame(fade);
-            } else {
-              circle.remove();
-              // Flash the output ball
-              const output = document.getElementById("outputLead");
-              if (output) {
-                output.setAttribute("fill", "#ff2fd1");
-                setTimeout(() => output.setAttribute("fill", "#00ffe7"), 350);
-              }
-            }
-          }
-          fade();
+          shrinkAndReset(circle, startX, startY, startR);
+          flashOutputLead();
         }
       }
-      animate();
+      requestAnimationFrame(animate);
+    }
+
+    function shrinkAndReset(circle, origX, origY, origR) {
+      let frame = 0, frames = 13;
+      function fade() {
+        frame++;
+        let t = frame / frames;
+        circle.setAttribute("r", Math.max(0, origR * (1 - t)));
+        circle.setAttribute("opacity", 1 - t);
+        if (frame < frames) {
+          requestAnimationFrame(fade);
+        } else {
+          // Reset ball position & opacity
+          circle.setAttribute("cx", origX);
+          circle.setAttribute("cy", origY);
+          circle.setAttribute("r", origR);
+          circle.setAttribute("opacity", 1);
+          circle.removeAttribute("data-dropping");
+        }
+      }
+      requestAnimationFrame(fade);
+    }
+
+    function flashOutputLead() {
+      const output = document.getElementById("outputLead");
+      if (output) {
+        output.setAttribute("fill", "#ff2fd1");
+        setTimeout(() => output.setAttribute("fill", "#00ffe7"), 350);
+      }
+    }
+
+    function easeOutCubic(t) {
+      return 1 - Math.pow(1 - t, 3);
     }
   }
 });
