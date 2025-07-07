@@ -1,97 +1,34 @@
-document.addEventListener("DOMContentLoaded", function() {
-  // Animate numbers on page load
-  function animateNumber(el, to, suffix = '', duration = 1300) {
-    let frame = 0;
-    let steps = Math.ceil(duration / 24);
-    let inc = to / steps;
-    function update() {
-      frame++;
-      let val = Math.round(inc * frame);
-      if (val >= to) {
-        el.textContent = to + suffix;
-      } else {
-        el.textContent = val + suffix;
-        requestAnimationFrame(update);
-      }
-    }
-    update();
-  }
-  document.querySelectorAll('.stat-num, .metric-value[data-to]').forEach(el => {
-    let to = parseInt(el.dataset.to, 10);
-    let suffix = el.textContent.trim().endsWith('%') ? '%' : '';
-    animateNumber(el, to, suffix, 1200 + Math.random() * 500);
+// Simple hero particle background animation
+const canvas = document.getElementById("particles");
+const ctx = canvas.getContext("2d");
+
+function resize() {
+  canvas.width = window.innerWidth;
+  canvas.height = window.innerHeight;
+}
+window.addEventListener('resize', resize);
+resize();
+
+let particles = Array.from({length: 50}, () => ({
+  x: Math.random() * canvas.width,
+  y: Math.random() * canvas.height,
+  radius: Math.random() * 2 + 1,
+  speedX: (Math.random() - 0.5) * 0.5,
+  speedY: (Math.random() - 0.5) * 0.5
+}));
+
+function animate() {
+  ctx.clearRect(0, 0, canvas.width, canvas.height);
+  ctx.fillStyle = "#00F0FF";
+  particles.forEach(p => {
+    p.x += p.speedX;
+    p.y += p.speedY;
+    if (p.x < 0 || p.x > canvas.width) p.speedX *= -1;
+    if (p.y < 0 || p.y > canvas.height) p.speedY *= -1;
+    ctx.beginPath();
+    ctx.arc(p.x, p.y, p.radius, 0, Math.PI * 2);
+    ctx.fill();
   });
-
-  // Interactive funnel balls animation
-  const inputBallsData = [
-    {cx: 105, cy: 60, r: 8, fill: "#ff2fd1"},
-    {cx: 155, cy: 60, r: 7, fill: "#00ffe7"},
-    {cx: 130, cy: 47, r: 9, fill: "#00ffe7"}
-  ];
-  const inputBallsGroup = document.getElementById("inputBalls");
-  if (inputBallsGroup) {
-    inputBallsData.forEach((ball, i) => {
-      const circle = document.createElementNS("http://www.w3.org/2000/svg", "circle");
-      Object.entries(ball).forEach(([k, v]) => circle.setAttribute(k, v));
-      circle.style.cursor = "pointer";
-      circle.setAttribute("data-idx", i);
-      circle.addEventListener("click", () => dropBall(circle));
-      inputBallsGroup.appendChild(circle);
-    });
-
-    function dropBall(circle) {
-      if (circle.getAttribute("data-dropping")) return;
-      circle.setAttribute("data-dropping", "1");
-      const startY = parseFloat(circle.getAttribute("cy"));
-      const endY = 210, startX = parseFloat(circle.getAttribute("cx")), endX = 130;
-      const startR = parseFloat(circle.getAttribute("r"));
-      let frame = 0, frames = 35;
-
-      function animate() {
-        frame++;
-        let t = frame / frames;
-        circle.setAttribute("cy", startY + (endY - startY) * easeOutCubic(t));
-        circle.setAttribute("cx", startX + (endX - startX) * t);
-        if (frame < frames) {
-          requestAnimationFrame(animate);
-        } else {
-          shrinkAndReset(circle, startX, startY, startR);
-          flashOutputLead();
-        }
-      }
-      requestAnimationFrame(animate);
-    }
-
-    function shrinkAndReset(circle, origX, origY, origR) {
-      let frame = 0, frames = 13;
-      function fade() {
-        frame++;
-        let t = frame / frames;
-        circle.setAttribute("r", Math.max(0, origR * (1 - t)));
-        circle.setAttribute("opacity", 1 - t);
-        if (frame < frames) {
-          requestAnimationFrame(fade);
-        } else {
-          circle.setAttribute("cx", origX);
-          circle.setAttribute("cy", origY);
-          circle.setAttribute("r", origR);
-          circle.setAttribute("opacity", 1);
-          circle.removeAttribute("data-dropping");
-        }
-      }
-      requestAnimationFrame(fade);
-    }
-
-    function flashOutputLead() {
-      const output = document.getElementById("outputLead");
-      if (output) {
-        output.setAttribute("fill", "#ff2fd1");
-        setTimeout(() => output.setAttribute("fill", "#00ffe7"), 350);
-      }
-    }
-
-    function easeOutCubic(t) {
-      return 1 - Math.pow(1 - t, 3);
-    }
-  }
-});
+  requestAnimationFrame(animate);
+}
+animate();
