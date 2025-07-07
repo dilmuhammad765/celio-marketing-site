@@ -1,5 +1,5 @@
 document.addEventListener("DOMContentLoaded", function() {
-  // Number animation for stats and metrics
+  // Animate numbers on page load
   function animateNumber(el, to, suffix = '', duration = 1300) {
     let frame = 0;
     let steps = Math.ceil(duration / 24);
@@ -16,14 +16,13 @@ document.addEventListener("DOMContentLoaded", function() {
     }
     update();
   }
-
   document.querySelectorAll('.stat-num, .metric-value[data-to]').forEach(el => {
     let to = parseInt(el.dataset.to, 10);
     let suffix = el.textContent.trim().endsWith('%') ? '%' : '';
     animateNumber(el, to, suffix, 1200 + Math.random() * 500);
   });
 
-  // Interactive animated funnel balls
+  // Interactive funnel balls animation
   const inputBallsData = [
     {cx: 105, cy: 60, r: 8, fill: "#ff2fd1"},
     {cx: 155, cy: 60, r: 7, fill: "#00ffe7"},
@@ -44,9 +43,7 @@ document.addEventListener("DOMContentLoaded", function() {
       if (circle.getAttribute("data-dropping")) return;
       circle.setAttribute("data-dropping", "1");
       const startY = parseFloat(circle.getAttribute("cy"));
-      const endY = 210; // Funnel output Y
-      const startX = parseFloat(circle.getAttribute("cx"));
-      const endX = 130; // Funnel center X
+      const endY = 210, startX = parseFloat(circle.getAttribute("cx")), endX = 130;
       const startR = parseFloat(circle.getAttribute("r"));
       let frame = 0, frames = 35;
 
@@ -75,7 +72,6 @@ document.addEventListener("DOMContentLoaded", function() {
         if (frame < frames) {
           requestAnimationFrame(fade);
         } else {
-          // Reset ball position & opacity
           circle.setAttribute("cx", origX);
           circle.setAttribute("cy", origY);
           circle.setAttribute("r", origR);
